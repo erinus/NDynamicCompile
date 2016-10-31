@@ -39,6 +39,7 @@
     <Compile Include="NDCAssembly.cs" />
     <Compile Include="NDCClass.cs" />
     <Compile Include="NDCCompiler.cs" />
+    <Compile Include="NDCDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

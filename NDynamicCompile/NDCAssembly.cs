@@ -25,10 +25,76 @@ namespace NDynamicCompile
 			List<NDCClass> result = new List<NDCClass>();
 
 			//
-			foreach (Type type in this._Assembly.GetTypes())
+			foreach (Type _type in this._Assembly.GetTypes())
 			{
 				//
-				result.Add(new NDCClass(type));
+				dynamic _class = new NDCClass(_type);
+
+				//
+				foreach (FieldInfo info in _type.GetFields())
+				{
+					//Console.WriteLine(info.Name);
+
+					//
+					if (info.IsPublic && info.IsStatic)
+					{
+						//
+						_class[info.Name] = info.GetValue(null);
+					}
+				}
+
+				//
+				foreach (MethodInfo info in _type.GetMethods())
+				{
+					//Console.WriteLine(info.Name);
+
+					//
+					if (info.IsPublic && info.IsStatic)
+					{
+						//
+						if (info.ReturnType == typeof(void))
+						{
+							//
+							_class[info.Name] = new NDCDelegate.ActionDelegate<object>(args =>
+							{
+								//
+								BindingFlags flags = BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Static;
+								//
+								MemberInfo[] infos = _type.GetMember(info.Name, flags);
+								//
+								if (infos != null && infos.Length > 0)
+								{
+									//
+									MethodInfo _info = infos[0] as MethodInfo;
+									//
+									_info.Invoke(null, args);
+								}
+							});
+						}
+						else
+						{
+							//
+							_class[info.Name] = new NDCDelegate.FuncDelegate<dynamic, object>(args =>
+							{
+								//
+								MemberInfo[] infos = _type.GetMember(info.Name, BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Static);
+								//
+								if (infos != null && infos.Length > 0)
+								{
+									//
+									MethodInfo _info = infos[0] as MethodInfo;
+									//
+									return _info.Invoke(null, args);
+								}
+								//
+								return null;
+							});
+						}
+					}
+				}
+
+				//
+				result.Add(_class);
 			}
 
 			//

@@ -24,6 +24,7 @@ namespace NDynamicCompile.Sample
 				"	class Test" +
 				"	{" +
 				"		public string Version = \"Field: 1.0.0\";" +
+				"		public static string StaticVersion = \"Static Field: 0.0.0\";" +
 				"		public Test()" +
 				"		{" +
 				"			Console.WriteLine(\"Constructor: Test\");" +
@@ -52,11 +53,35 @@ namespace NDynamicCompile.Sample
 				"		{" +
 				"			return string.Format(\"Method: Test6({0}, {1}) -> Return String\", t1, t2);" +
 				"		}" +
+				"		public static void Test7()" +
+				"		{" +
+				"			Console.WriteLine(\"Static Method: Test7\");" +
+				"		}" +
+				"		public static void Test8(string t)" +
+				"		{" +
+				"			Console.WriteLine(string.Format(\"Static Method: Test8({0})\", t));" +
+				"		}" +
+				"		public static void Test9(string t1, string t2)" +
+				"		{" +
+				"			Console.WriteLine(string.Format(\"Static Method: Test9({0}, {1})\", t1, t2));" +
+				"		}" +
+				"		public static string Test10()" +
+				"		{" +
+				"			return \"Static Method: Test10() -> Return String\";" +
+				"		}" +
+				"		public static string Test11(string t)" +
+				"		{" +
+				"			return string.Format(\"Static Method: Test11({0}) -> Return String\", t);" +
+				"		}" +
+				"		public static string Test12(string t1, string t2)" +
+				"		{" +
+				"			return string.Format(\"Static Method: Test12({0}, {1}) -> Return String\", t1, t2);" +
+				"		}" +
 				"	}" +
 				"}"
 			);
 
-			foreach (NDCClass _class in _assembly.Types())
+			foreach (dynamic _class in _assembly.Types())
 			{
 				Console.WriteLine(_class.FullName);
 
@@ -77,6 +102,20 @@ namespace NDynamicCompile.Sample
 					Console.WriteLine(test.Test6("p1", "p2"));
 
 					Console.WriteLine(test.Version);
+
+					_class.Test7();
+
+					_class.Test8("p");
+
+					_class.Test9("p1", "p2");
+
+					Console.WriteLine(_class.Test10());
+
+					Console.WriteLine(_class.Test11("p"));
+
+					Console.WriteLine(_class.Test12("p1", "p2"));
+
+					Console.WriteLine(_class.StaticVersion);
 				}
 			}
 		}

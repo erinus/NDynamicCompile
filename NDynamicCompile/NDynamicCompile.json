@@ -1,0 +1,16 @@
+﻿{
+	"mappings": {
+		"mscorlib.dll": [
+
+		],
+		"System.dll": [
+			"System"
+		],
+		"System.Core.dll": [
+
+		],
+		"System.Collections.dll": [
+			"System.Collections"
+		]
+	}
+}

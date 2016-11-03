@@ -81,27 +81,34 @@ namespace NDynamicCompile.Sample
 				"}"
 			);
 
-			foreach (dynamic _class in _assembly.Types())
+			Test1(_assembly);
+
+			Test2(_assembly);
+		}
+
+		static void Test1(NDCAssembly _assembly)
+		{
+			foreach (dynamic _class in _assembly.Classes)
 			{
 				Console.WriteLine(_class.FullName);
 
 				if ("Test".Equals(_class.Name))
 				{
-					dynamic test = _class.New();
+					dynamic _inst = _class.New();
 
-					test.Test1();
+					_inst.Test1();
 
-					test.Test2("p");
+					_inst.Test2("p");
 
-					test.Test3("p1", "p2");
+					_inst.Test3("p1", "p2");
 
-					Console.WriteLine(test.Test4());
+					Console.WriteLine(_inst.Test4());
 
-					Console.WriteLine(test.Test5("p"));
+					Console.WriteLine(_inst.Test5("p"));
 
-					Console.WriteLine(test.Test6("p1", "p2"));
+					Console.WriteLine(_inst.Test6("p1", "p2"));
 
-					Console.WriteLine(test.Version);
+					Console.WriteLine(_inst.Version);
 
 					_class.Test7();
 
@@ -118,6 +125,43 @@ namespace NDynamicCompile.Sample
 					Console.WriteLine(_class.StaticVersion);
 				}
 			}
+		}
+
+		static void Test2(NDCAssembly _assembly)
+		{
+			dynamic _class = _assembly.Class("Test");
+
+			Console.WriteLine(_class.FullName);
+
+			dynamic _inst = _class.New();
+
+			_inst.Test1();
+
+			_inst.Test2("p");
+
+			_inst.Test3("p1", "p2");
+
+			Console.WriteLine(_inst.Test4());
+
+			Console.WriteLine(_inst.Test5("p"));
+
+			Console.WriteLine(_inst.Test6("p1", "p2"));
+
+			Console.WriteLine(_inst.Version);
+
+			_class.Test7();
+
+			_class.Test8("p");
+
+			_class.Test9("p1", "p2");
+
+			Console.WriteLine(_class.Test10());
+
+			Console.WriteLine(_class.Test11("p"));
+
+			Console.WriteLine(_class.Test12("p1", "p2"));
+
+			Console.WriteLine(_class.StaticVersion);
 		}
 	}
 }

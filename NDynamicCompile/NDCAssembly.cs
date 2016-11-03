@@ -13,16 +13,16 @@ namespace NDynamicCompile
 		//
 		private Assembly _Assembly;
 
+		//
+		public List<NDCClass> Classes;
+
 		public NDCAssembly(Assembly assembly)
 		{
 			//
 			this._Assembly = assembly;
-		}
 
-		public List<NDCClass> Types()
-		{
 			//
-			List<NDCClass> result = new List<NDCClass>();
+			this.Classes = new List<NDCClass>();
 
 			//
 			foreach (Type _type in this._Assembly.GetTypes())
@@ -94,7 +94,26 @@ namespace NDynamicCompile
 				}
 
 				//
-				result.Add(_class);
+				this.Classes.Add(_class);
+			}
+		}
+
+		public NDCClass Class(string name)
+		{
+			//
+			NDCClass result = null;
+
+			//
+			foreach (NDCClass _class in this.Classes)
+			{
+				//
+				if (name.Equals(_class.Name))
+				{
+					//
+					result = _class;
+					//
+					break;
+				}
 			}
 
 			//

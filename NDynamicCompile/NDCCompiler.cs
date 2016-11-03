@@ -20,6 +20,9 @@ namespace NDynamicCompile
 		public List<string> ReferencedAssemblies;
 
 		//
+		public List<string> CompiledResults;
+
+		//
 		public NDCCompiler()
 		{
 			//
@@ -28,6 +31,8 @@ namespace NDynamicCompile
 			this._Parameters = new CompilerParameters();
 			//
 			this.ReferencedAssemblies = new List<string>();
+			//
+			this.CompiledResults = new List<string>();
 		}
 
 		public NDCAssembly Compile(string code)
@@ -59,6 +64,15 @@ namespace NDynamicCompile
 			{
 				//
 				assembly = new NDCAssembly(results.CompiledAssembly);
+			}
+			else
+			{
+				//
+				foreach (CompilerError error in results.Errors)
+				{
+					//
+					this.CompiledResults.Add(error.ErrorText);
+				}
 			}
 
 			//

@@ -38,6 +38,8 @@ namespace NDynamicCompile
 		public NDCAssembly Compile(string code)
 		{
 			//
+			this._Parameters.GenerateInMemory = true;
+			//
 			this._Parameters.GenerateExecutable = false;
 			//
 			foreach (string reference in this.ReferencedAssemblies)
